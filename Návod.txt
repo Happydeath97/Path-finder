@@ -1,0 +1,12 @@
+Ovládání:
+
+Levé tlačítko myši buduje překážky.
+Pravé tlačítko myši označí pole start.(může být jen jeden)
+Tlačítko "C" na klávesnici označí pole cíl tam kde se nachází kurzor myši.
+(může být jen jeden)
+pokud je potřeba něco smazat namiřte myš na pole co chcete opravit a zmáčkněte klávesu "G"
+
+Když je bludiště připravené zmáčkněte mezerník a program najde nejkratší cestu.
+
+
+Pro spuštění otevřete soubor main.
