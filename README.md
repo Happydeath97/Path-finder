@@ -1,6 +1,6 @@
 # Path-finder
 
-Its path finder app where you can draw your own maze and then see how algorytmus looking for the shortest way and also you can see the shortest way.
+Its path finder app where you can draw your own maze and then see how algorytmus looking for the shortest way.
 
 left mouse draw a way
 right mouse undo
