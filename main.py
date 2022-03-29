@@ -21,7 +21,7 @@ def find_path(mapa):
     q.put((start_pos, [start_pos]))
     visited = set()
 
-    if end_pos == None:
+    if end_pos is None:
         draw_win()
 
     while not q.empty():
@@ -57,7 +57,7 @@ def find_path(mapa):
             new_path = path + [neighbor]
             q.put((neighbor, new_path))
             visited.add(neighbor)
-            
+
     if end_pos not in visited:
         draw_win()
 
