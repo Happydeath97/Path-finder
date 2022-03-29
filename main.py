@@ -1,3 +1,4 @@
+import time
 import pygame
 from herni_plan import *
 import queue
@@ -7,16 +8,16 @@ ROWS = 50
 TILESIZE = WIDTH // ROWS
 BLACK = (0, 0, 0)
 CLOCK = pygame.time.Clock()
-
+MAPA = WORLD_MAP
 pygame.display.set_caption("PATH FINDER")
 
 WIN = pygame.display.set_mode((WIDTH, WIDTH))
 
-def find_path(WORLD_MAP):
+def find_path(mapa):
     if pygame.key.get_pressed()[pygame.K_SPACE]:
         start = "O"
         end = "X"
-        start_pos = find_start(WORLD_MAP, start)
+        start_pos = find_start(mapa, start)
         q = queue.Queue()
         q.put((start_pos, [start_pos]))
         visited = set()
@@ -29,8 +30,7 @@ def find_path(WORLD_MAP):
             pygame.draw.rect(WIN, (61, 90, 254), (c*TILESIZE, r*TILESIZE, TILESIZE, TILESIZE))
             pygame.display.update()
             time.sleep(0.005)
-
-            if WORLD_MAP[row][col] == end:
+            if mapa[row][col] == end:
                 for i in path:
                     r, c = i
                     pygame.draw.rect(WIN, (144, 202, 249), (c*TILESIZE, r*TILESIZE, TILESIZE, TILESIZE))
@@ -42,35 +42,35 @@ def find_path(WORLD_MAP):
                         pygame.quit()
                         exit()
 
-            neighbors = find_neighbors(WORLD_MAP, row, col)
+            neighbors = find_neighbors(mapa, row, col)
             for neighbor in neighbors:
                 if neighbor in visited:
                     continue
 
                 r, c = neighbor
-                if WORLD_MAP[r][c] == "x":
+                if mapa[r][c] == "x":
                     continue
 
                 new_path = path + [neighbor]
                 q.put((neighbor, new_path))
                 visited.add(neighbor)
 
-def find_neighbors(WORLD_MAP, row, col):
+def find_neighbors(mapa, row, col):
     neighbors = []
 
     if row > 0:     # up
         neighbors.append((row - 1, col))
-    if row + 1 < len(WORLD_MAP):     # down
+    if row + 1 < len(mapa):     # down
         neighbors.append((row + 1, col))
     if col > 0:     # left
         neighbors.append((row, col - 1))
-    if col + 1 < len(WORLD_MAP[0]):      # right
+    if col + 1 < len(mapa[0]):      # right
         neighbors.append((row, col + 1))
 
     return neighbors
 
-def find_start(WORLD_MAP, start):
-    for r, row in enumerate(WORLD_MAP):
+def find_start(mapa, start):
+    for r, row in enumerate(mapa):
         for c, value in enumerate(row):
             if value == start:
                 return r, c
@@ -83,31 +83,31 @@ def turn1():
         y = pygame.mouse.get_pos()[1]
         row = y // TILESIZE
         column = x // TILESIZE
-        if WORLD_MAP[row][column] == "x":
-            WORLD_MAP[row][column] = "#"
+        if MAPA[row][column] == "x":
+            MAPA[row][column] = "#"
 
     if pygame.key.get_pressed()[pygame.K_v]:
         x = pygame.mouse.get_pos()[0]
         y = pygame.mouse.get_pos()[1]
         row = y // TILESIZE
         column = x // TILESIZE
-        if WORLD_MAP[row][column] == "x":
-            WORLD_MAP[row][column] = "O"
+        if MAPA[row][column] == "x":
+            MAPA[row][column] = "O"
 
     if pygame.key.get_pressed()[pygame.K_c]:
         x = pygame.mouse.get_pos()[0]
         y = pygame.mouse.get_pos()[1]
         row = y // TILESIZE
         column = x // TILESIZE
-        if WORLD_MAP[row][column] == "x":
-            WORLD_MAP[row][column] = "X"
+        if MAPA[row][column] == "x":
+            MAPA[row][column] = "X"
 
     if pygame.mouse.get_pressed()[2]:
         x = pygame.mouse.get_pos()[0]
         y = pygame.mouse.get_pos()[1]
         row = y // TILESIZE
         column = x // TILESIZE
-        WORLD_MAP[row][column] = "x"
+        MAPA[row][column] = "x"
 
 def draw_win():
     WIN.fill(BLACK)
@@ -121,7 +121,7 @@ def draw_win():
         pygame.draw.line(WIN, (255, 255, 255), (x, 0), (x, WIDTH))
         pygame.draw.line(WIN, (255, 255, 255), (0, y), (WIDTH, y))
 
-    for row_index, row in enumerate(WORLD_MAP):
+    for row_index, row in enumerate(MAPA):
         for col_index, col in enumerate(row):
             x = col_index * TILESIZE
             y = row_index * TILESIZE
@@ -143,7 +143,7 @@ def main():
         CLOCK.tick(60)
         draw_win()
         turn1()
-        find_path(WORLD_MAP)
+        find_path(MAPA)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 flag = False
