@@ -25,10 +25,11 @@ def find_path(WORLD_MAP):
         while not q.empty():
             current_pos, path = q.get()
             row, col = current_pos
-            for i in path:
-                r, c = i
-                pygame.draw.rect(WIN, (61, 90, 254), (c*TILESIZE, r*TILESIZE, TILESIZE, TILESIZE))
-                pygame.display.update()
+            i = path[-1]
+            r, c = i
+            pygame.draw.rect(WIN, (61, 90, 254), (c*TILESIZE, r*TILESIZE, TILESIZE, TILESIZE))
+            pygame.display.update()
+            time.sleep(0.005)
 
             if WORLD_MAP[row][col] == end:
                 for i in path:
