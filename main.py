@@ -7,7 +7,6 @@ ROWS = 50
 TILESIZE = WIDTH // ROWS
 BLACK = (0, 0, 0)
 CLOCK = pygame.time.Clock()
-TURN = [" "]
 
 pygame.display.set_caption("PATH FINDER")
 
